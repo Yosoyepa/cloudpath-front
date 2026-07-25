@@ -52,7 +52,7 @@ export const cloudpathApi = {
       method: "POST",
       body,
       headers: { "X-CloudPath-Session": getAnonymousSessionId() },
-      timeoutMs: 18_000,
+      timeoutMs: 60_000,
       validate: validatesAdaptation,
     }),
   voiceToken: (sessionId: string) =>
