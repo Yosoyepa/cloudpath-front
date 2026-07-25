@@ -196,6 +196,18 @@ test("la landing conserva CTA y ancho útil en desktop y mobile reducido", async
     await expect(
       page.getByRole("link", { name: /Diseñar mi ruta/i }).first(),
     ).toBeVisible();
+    const onboardingVideo = page.getByLabel(
+      "Video de introducción a CloudPath",
+    );
+    await expect(onboardingVideo).toBeVisible();
+    await expect(onboardingVideo).toHaveAttribute(
+      "poster",
+      "/media/cloudpath-onboarding-poster.jpg",
+    );
+    await expect(onboardingVideo.locator("source")).toHaveAttribute(
+      "src",
+      "/media/cloudpath-onboarding.mp4",
+    );
     await expect(page.locator(".static-landing__steps")).toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(

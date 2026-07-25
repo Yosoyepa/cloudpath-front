@@ -128,6 +128,40 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <section
+        className="cp-section static-landing__demo"
+        aria-labelledby="landing-demo-title"
+      >
+        <div className="cp-container">
+          <div className="static-landing__demo-heading">
+            <p className="eyebrow">El recorrido</p>
+            <h2 id="landing-demo-title">Un solo camino, paso a paso.</h2>
+          </div>
+          <figure className="static-landing__demo-frame">
+            <video
+              className="static-landing__demo-video"
+              controls
+              playsInline
+              preload="metadata"
+              poster="/media/cloudpath-onboarding-poster.jpg"
+              aria-label="Video de introducción a CloudPath"
+            >
+              <source
+                src="/media/cloudpath-onboarding.mp4"
+                type="video/mp4"
+              />
+              Tu navegador no puede reproducir este video.
+            </video>
+            <figcaption className="static-landing__demo-caption">
+              <span className="meta">
+                Mira cómo funciona · recorrido completo
+              </span>
+              <span className="meta">00:26</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section className="cp-section static-landing__certification">
         <div className="cp-container">
           <div className="panel panel-elevated">

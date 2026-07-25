@@ -159,6 +159,18 @@ describe("LandingPage", () => {
     expect(
       screen.getByRole("heading", { name: /tu ruta se dibuja contigo/i }),
     ).toBeVisible();
+    const onboardingVideo = screen.getByLabelText(
+      "Video de introducción a CloudPath",
+    );
+    expect(onboardingVideo).toHaveAttribute(
+      "poster",
+      "/media/cloudpath-onboarding-poster.jpg",
+    );
+    expect(onboardingVideo).toHaveAttribute("preload", "metadata");
+    expect(onboardingVideo.querySelector("source")).toHaveAttribute(
+      "src",
+      "/media/cloudpath-onboarding.mp4",
+    );
   });
 
   it("reproduce el intercambio de letras del título al pasar el cursor", async () => {
