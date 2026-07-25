@@ -25,16 +25,10 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command:
-        "uv run --directory ../api uvicorn cloudpath_api.main:app --host 127.0.0.1 --port 18000",
+      command: "node tests/e2e/mock-api.mjs",
       url: "http://127.0.0.1:18000/api/health",
       reuseExistingServer: false,
       timeout: 30_000,
-      env: {
-        ...process.env,
-        CLOUDPATH_DEMO_MODE: "true",
-        CLOUDPATH_ALLOWED_ORIGINS: '["http://localhost:15173"]',
-      },
     },
     {
       command: "pnpm exec vite --port 15173",

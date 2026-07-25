@@ -132,7 +132,9 @@ async function runJudgedPath(browser: Browser, run: number) {
   await test.step(`recorrido determinista ${run}: recalibración`, async () => {
     await expect(page.getByText("Señal provisional aplicada")).toBeVisible();
     await expect(page.getByText("-15 dominio")).toBeVisible();
-    await expect(page.getByText("Modo respaldo")).toBeVisible();
+    await expect(
+      page.getByText("Modo respaldo", { exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByText(
         "IAM frente a KMS: control de acceso y cifrado no son lo mismo",

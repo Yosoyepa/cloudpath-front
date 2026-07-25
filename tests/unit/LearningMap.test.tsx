@@ -175,4 +175,28 @@ describe("LearningMap", () => {
       screen.getByRole("button", { name: /Abrir lección: Fundamentos de IAM/ }),
     ).toBeInTheDocument();
   });
+
+  it("starts with the legible list view on a narrow screen", () => {
+    const originalMatchMedia = window.matchMedia;
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: query === "(max-width: 40rem)",
+      media: query,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }));
+
+    try {
+      renderMap();
+      expect(screen.getByRole("list")).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /ver mapa/i }),
+      ).toBeInTheDocument();
+    } finally {
+      window.matchMedia = originalMatchMedia;
+    }
+  });
 });

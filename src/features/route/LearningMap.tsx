@@ -37,13 +37,21 @@ function edgeStateFor(targetStatus: string | undefined, isActive: boolean): Lear
   return "default";
 }
 
+function startsWithListView(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(max-width: 40rem)").matches
+  );
+}
+
 /**
  * Controlled React Flow graph for the current RouteState. Node and edge
  * types are declared at module scope; nodes are fixed (not draggable, not
  * connectable) but focusable and keyboard operable through real buttons.
  */
 export function LearningMap({ route, onOpenNode }: LearningMapProps) {
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState(startsWithListView);
 
   const layout = useMemo(() => layoutRoute(route), [route]);
 
