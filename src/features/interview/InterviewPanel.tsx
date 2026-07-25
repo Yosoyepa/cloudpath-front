@@ -1,4 +1,10 @@
-import { ArrowRight, Keyboard, Mic, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  Keyboard,
+  Mic,
+  RotateCcw,
+  ShieldCheck,
+} from "lucide-react";
 import {
   useRef,
   useState,
@@ -29,6 +35,7 @@ interface InterviewPanelProps {
   onUseText: () => void;
   onWrittenSubmit: () => void;
   onFinishVoice: () => void;
+  onNewVoiceSession?: () => void;
 }
 
 export function InterviewPanel({
@@ -46,6 +53,7 @@ export function InterviewPanel({
   onUseText,
   onWrittenSubmit,
   onFinishVoice,
+  onNewVoiceSession,
 }: InterviewPanelProps) {
   const [mobilePane, setMobilePane] = useState<"mentor" | "route">("mentor");
   const mentorTabRef = useRef<HTMLButtonElement>(null);
@@ -259,9 +267,19 @@ export function InterviewPanel({
           ) : null}
 
           {reason ? (
-            <p className="provider-message" role="status">
-              {reason}
-            </p>
+            <div className="provider-message" role="status">
+              <p>{reason}</p>
+              {written && onNewVoiceSession ? (
+                <button
+                  className="button button-quiet"
+                  type="button"
+                  onClick={onNewVoiceSession}
+                >
+                  <RotateCcw aria-hidden="true" size={16} />
+                  Iniciar nueva sesión de voz
+                </button>
+              ) : null}
+            </div>
           ) : null}
         </section>
 

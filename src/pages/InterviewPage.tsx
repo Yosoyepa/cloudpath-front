@@ -148,6 +148,13 @@ export default function InterviewPage() {
     );
   }
 
+  async function startNewVoiceSession() {
+    await voice.restart();
+    setForceText(false);
+    setReason(undefined);
+    await voice.start();
+  }
+
   const status = submitting
     ? "submitting"
     : forceText
@@ -172,6 +179,11 @@ export default function InterviewPage() {
         onUseText={() => void useWrittenMode()}
         onWrittenSubmit={submitWrittenAnswer}
         onFinishVoice={() => void finishVoice()}
+        onNewVoiceSession={
+          voice.state.status === "text"
+            ? () => void startNewVoiceSession()
+            : undefined
+        }
       />
     </div>
   );

@@ -1,4 +1,7 @@
-import { cloudpathApi } from "../../src/api/cloudpath";
+import {
+  cloudpathApi,
+  renewAnonymousSessionId,
+} from "../../src/api/cloudpath";
 import demoProfileJson from "../../src/contracts/generated/fixtures/demo-profile.json";
 import lessonJson from "../../src/contracts/generated/fixtures/iam-fundamentals-lesson.json";
 import type {
@@ -16,6 +19,20 @@ describe("cloudpathApi", () => {
   afterEach(() => {
     window.sessionStorage.clear();
     vi.unstubAllGlobals();
+  });
+
+  it("rotates the anonymous id for a new voice session", () => {
+    window.sessionStorage.setItem(
+      "cloudpath.anonymous-session",
+      "consumed-session",
+    );
+
+    const renewed = renewAnonymousSessionId();
+
+    expect(renewed).not.toBe("consumed-session");
+    expect(window.sessionStorage.getItem("cloudpath.anonymous-session")).toBe(
+      renewed,
+    );
   });
 
   it("sends the anonymous session id with lesson requests", async () => {

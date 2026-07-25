@@ -29,6 +29,7 @@ const validatesLesson = validator<LessonResponse>(lessonResponseSchema);
 const validatesAdaptation = validator<AdaptResponse>(adaptResponseSchema);
 const validatesVoiceToken =
   validator<VoiceTokenResponse>(voiceTokenResponseSchema);
+const ANONYMOUS_SESSION_KEY = "cloudpath.anonymous-session";
 
 export const cloudpathApi = {
   profile: (body: ProfileRequest) =>
@@ -67,12 +68,17 @@ export const cloudpathApi = {
 export function getAnonymousSessionId(
   storage: Pick<Storage, "getItem" | "setItem"> = window.sessionStorage,
 ): string {
-  const key = "cloudpath.anonymous-session";
-  const existing = storage.getItem(key);
+  const existing = storage.getItem(ANONYMOUS_SESSION_KEY);
   if (existing) {
     return existing;
   }
+  return renewAnonymousSessionId(storage);
+}
+
+export function renewAnonymousSessionId(
+  storage: Pick<Storage, "setItem"> = window.sessionStorage,
+): string {
   const created = crypto.randomUUID();
-  storage.setItem(key, created);
+  storage.setItem(ANONYMOUS_SESSION_KEY, created);
   return created;
 }

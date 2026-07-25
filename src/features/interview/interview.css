@@ -477,6 +477,9 @@
 }
 
 .provider-message {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
   margin: 0;
   border: 1px solid
     color-mix(in oklch, var(--color-gap) 50%, var(--color-line));
@@ -484,6 +487,10 @@
   background: color-mix(in oklch, var(--color-gap) 16%, transparent);
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
+}
+
+.provider-message p {
+  margin: 0;
 }
 
 .route-action {

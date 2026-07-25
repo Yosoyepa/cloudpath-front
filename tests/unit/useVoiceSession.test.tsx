@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   constructor: vi.fn(),
   voiceToken: vi.fn(),
   getSessionId: vi.fn(() => "anonymous-session"),
+  renewSessionId: vi.fn(() => "renewed-session"),
   startCapture: vi.fn(),
   playbackClose: vi.fn(async () => undefined),
   playbackClear: vi.fn(),
@@ -26,6 +27,7 @@ vi.mock("@google/genai", () => ({
 vi.mock("../../src/api/cloudpath", () => ({
   cloudpathApi: { voiceToken: mocks.voiceToken },
   getAnonymousSessionId: mocks.getSessionId,
+  renewAnonymousSessionId: mocks.renewSessionId,
 }));
 
 vi.mock("../../src/features/interview/audio/capture", () => ({
@@ -91,6 +93,8 @@ function message(value: object): LiveServerMessage {
 describe("useVoiceSession", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.getSessionId.mockReturnValue("anonymous-session");
+    mocks.renewSessionId.mockReturnValue("renewed-session");
     setupCapture();
     mocks.voiceToken.mockResolvedValue(token());
   });
@@ -161,6 +165,32 @@ describe("useVoiceSession", () => {
     expect(mocks.connect).not.toHaveBeenCalled();
     expect(onFallback).toHaveBeenCalledOnce();
     expect(result.current.state.status).toBe("text");
+  });
+
+  it("renews the anonymous id before retrying a consumed voice session", async () => {
+    mocks.renewSessionId.mockImplementation(() => {
+      mocks.getSessionId.mockReturnValue("renewed-session");
+      return "renewed-session";
+    });
+    mocks.voiceToken
+      .mockRejectedValueOnce(new Error("session budget exhausted"))
+      .mockResolvedValueOnce(token());
+    setupConnected();
+    const { result } = renderHook(() =>
+      useVoiceSession({ onTranscript: vi.fn(), onFallback: vi.fn() }),
+    );
+
+    await act(async () => result.current.start());
+    expect(result.current.state.status).toBe("text");
+
+    await act(async () => result.current.restart());
+    expect(mocks.renewSessionId).toHaveBeenCalledOnce();
+    expect(result.current.state.status).toBe("idle");
+
+    await act(async () => result.current.start());
+    expect(mocks.voiceToken).toHaveBeenCalledTimes(2);
+    expect(mocks.voiceToken).toHaveBeenLastCalledWith("renewed-session");
+    expect(result.current.state.status).toBe("listening");
   });
 
   it("deduplicates socket error and close fallback and redacts close reason", async () => {

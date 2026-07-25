@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   cloudpathApi,
   getAnonymousSessionId,
+  renewAnonymousSessionId,
 } from "../../api/cloudpath";
 import {
   transition,
@@ -71,6 +72,7 @@ export interface VoiceSessionController {
   state: InterviewMachineState;
   transcript: string;
   start: () => Promise<void>;
+  restart: () => Promise<void>;
   finish: () => Promise<void>;
   stop: () => Promise<void>;
 }
@@ -516,6 +518,27 @@ export function useVoiceSession({
     await stop();
   }, [diagnose, stop]);
 
+  const restart = useCallback(async () => {
+    await stop();
+    renewAnonymousSessionId();
+    attemptedRef.current = false;
+    startInFlightRef.current = false;
+    fallbackNotifiedRef.current = false;
+    stoppingRef.current = false;
+    startedAtRef.current = null;
+    pendingToolResponsesRef.current = [];
+    completionAcceptedRef.current = false;
+    completionAckSentRef.current = false;
+    postAckOutputSeenRef.current = false;
+    completionFinishingRef.current = false;
+    pendingCompletionRef.current = null;
+    setTranscript("");
+    onTranscriptRef.current("");
+    const next = { status: "idle" } as const;
+    stateRef.current = next;
+    setState(next);
+  }, [stop]);
+
   useEffect(
     () => () => {
       void stop();
@@ -523,5 +546,5 @@ export function useVoiceSession({
     [stop],
   );
 
-  return { state, transcript, start, finish, stop };
+  return { state, transcript, start, restart, finish, stop };
 }

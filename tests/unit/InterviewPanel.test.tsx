@@ -46,6 +46,31 @@ describe("InterviewPanel", () => {
     expect(screen.getByText(/señal 1 de 6/i)).toBeVisible();
   });
 
+  it("offers a new voice session after voice fallback", async () => {
+    const user = userEvent.setup();
+    const onNewVoiceSession = vi.fn();
+    render(
+      <InterviewPanel
+        {...baseProps}
+        status="text"
+        reason="La voz no pudo iniciar."
+        question={{
+          prompt: "¿Qué quieres conseguir?",
+          placeholder: "Tu objetivo",
+        }}
+        onNewVoiceSession={onNewVoiceSession}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /iniciar nueva sesión de voz/i,
+      }),
+    );
+
+    expect(onNewVoiceSession).toHaveBeenCalledOnce();
+  });
+
   it("announces inline validation without discarding the question", () => {
     render(
       <InterviewPanel
