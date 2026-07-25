@@ -211,3 +211,24 @@ test("la landing conserva CTA y ancho útil en desktop y mobile reducido", async
     await context.close();
   }
 });
+
+test("el título de la landing intercambia sus letras al pasar el cursor", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const heading = page.getByRole("heading", {
+    name: "Tu ruta a AWS no debería empezar con otra pestaña.",
+  });
+  const firstLetter = heading.locator(".landing-title-primary").first();
+
+  await heading.hover();
+  await expect(heading).toHaveClass(/is-swapped/);
+  await expect
+    .poll(() =>
+      firstLetter.evaluate((element) => getComputedStyle(element).transform),
+    )
+    .not.toBe("none");
+
+  await page.mouse.move(0, 0);
+  await expect(heading).not.toHaveClass(/is-swapped/);
+});

@@ -1,7 +1,77 @@
 import { Mic, Network, RefreshCw } from "lucide-react";
+import { Fragment, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
 import "../features/landing/staticLanding.css";
+
+const headline = "Tu ruta a AWS no debería empezar con otra pestaña.";
+const headlineWords = headline.split(" ");
+const headlineLetterCount = Array.from(headline.replaceAll(" ", "")).length;
+
+function shuffledDelays(): number[] {
+  const order = Array.from(
+    { length: headlineLetterCount },
+    (_, index) => index,
+  );
+  for (let index = order.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [order[index], order[randomIndex]] = [order[randomIndex], order[index]];
+  }
+
+  const delays = Array.from({ length: headlineLetterCount }, () => 0);
+  order.forEach((letterIndex, position) => {
+    delays[letterIndex] = position * 18;
+  });
+  return delays;
+}
+
+function AnimatedHeadline() {
+  const [swapped, setSwapped] = useState(false);
+  const [delays, setDelays] = useState(() =>
+    Array.from({ length: headlineLetterCount }, () => 0),
+  );
+  let letterIndex = 0;
+
+  function swap(next: boolean) {
+    setDelays(shuffledDelays());
+    setSwapped(next);
+  }
+
+  return (
+    <h1
+      className={`static-landing__headline${swapped ? " is-swapped" : ""}`}
+      aria-label={headline}
+      onMouseEnter={() => swap(true)}
+      onMouseLeave={() => swap(false)}
+    >
+      {headlineWords.map((word, wordIndex) => (
+        <Fragment key={wordIndex}>
+          <span className="landing-title-word" aria-hidden="true">
+            {Array.from(word).map((letter) => {
+              const currentIndex = letterIndex;
+              letterIndex += 1;
+              return (
+                <span
+                  className="landing-title-letter"
+                  style={
+                    {
+                      "--letter-delay": `${delays[currentIndex]}ms`,
+                    } as CSSProperties
+                  }
+                  key={currentIndex}
+                >
+                  <span className="landing-title-primary">{letter}</span>
+                  <span className="landing-title-secondary">{letter}</span>
+                </span>
+              );
+            })}
+          </span>
+          {wordIndex < headlineWords.length - 1 ? " " : null}
+        </Fragment>
+      ))}
+    </h1>
+  );
+}
 
 const steps = [
   {
@@ -33,7 +103,7 @@ export default function LandingPage() {
             width={240}
             height={64}
           />
-          <h1>Tu ruta a AWS no debería empezar con otra pestaña.</h1>
+          <AnimatedHeadline />
           <p>
             Habla con un mentor, descubre qué dominas y recibe un plan que
             cambia contigo.

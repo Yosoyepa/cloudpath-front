@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
 import LandingPage from "../../src/pages/LandingPage";
@@ -158,5 +159,25 @@ describe("LandingPage", () => {
     expect(
       screen.getByRole("heading", { name: /tu ruta se dibuja contigo/i }),
     ).toBeVisible();
+  });
+
+  it("reproduce el intercambio de letras del título al pasar el cursor", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <LandingPage />
+      </MemoryRouter>,
+    );
+
+    const heading = screen.getByRole("heading", {
+      name: "Tu ruta a AWS no debería empezar con otra pestaña.",
+    });
+    expect(heading.querySelectorAll(".landing-title-letter")).toHaveLength(41);
+
+    await user.hover(heading);
+    expect(heading).toHaveClass("is-swapped");
+
+    await user.unhover(heading);
+    expect(heading).not.toHaveClass("is-swapped");
   });
 });
