@@ -44,7 +44,7 @@ export const cloudpathApi = {
       method: "POST",
       body,
       headers: { "X-CloudPath-Session": getAnonymousSessionId() },
-      timeoutMs: 40_000,
+      timeoutMs: 60_000,
       validate: validatesLesson,
     }),
   adapt: (body: AdaptRequest) =>
