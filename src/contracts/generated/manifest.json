@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "source": "product/contracts",
+  "sourceTree": "00b3cc053cf4397a6c3cf98ecf9ef917b0fd2bc4",
+  "files": {
+    "adaptation-matrix.json": "d2fd19e17d45d6882a84cc76d945775e22f3733bb7be8e79e2fa41acaaa32360",
+    "fixtures/demo-profile.json": "f5d914c55112020a22307125d07d8e853ab1afcb81b429a6b543d9dbc17aa072",
+    "fixtures/demo-route.json": "cb3359e4c61b1e5f20e36109bdef9bde05fdb7b61a50296d4c8a0279e619daa0",
+    "fixtures/demo-transcript.json": "2e840b2d1c719b517d33f20acce73eb2dadd19b58efa9e9b2d4e0a2749636c26",
+    "fixtures/high-confidence-wrong-attempt.json": "881554d6b8c356cd15c5d7a4c5cd5c3ae1091ef7af995498b8d7640284e4dbf4",
+    "fixtures/iam-fundamentals-lesson.json": "46362663574d013b2b135080df1ac390f496449e449bc05d89738b67474561b5",
+    "fixtures/iam-vs-kms-intervention.json": "b2d0053a95f3a1d7a54f92488f4adf22656f127c455cd3bae8705f49c2adb8c6",
+    "fixtures/iam-vs-kms-lesson.json": "fa24d5c39f5d74c6c82bc61f00d041476bfbfba254f45d7004fb292ee14f1c16",
+    "schemas/AdaptRequest.json": "6a9854e41ef3f3e6705451c562ac4d611bcd5e46639764fa43afd413ac43970d",
+    "schemas/AdaptResponse.json": "ca444e22b96e2f599580139e17567094764fdae79804fff029fcf37e0258f40e",
+    "schemas/HealthResponse.json": "680029204abff6af20f42ccb7661350c3ecb4966ebfde7b83ec3cc0563b2eb89",
+    "schemas/LessonRequest.json": "9bfe8d4e739121755ac82b23b2c78cd22fb036e724c899fdefdf4150842506b3",
+    "schemas/LessonResponse.json": "4d057ebfe1e0e5c3408480adbbc28d682364270a686566410d832463040626d8",
+    "schemas/ProfileRequest.json": "f97ca26b482940e60af97ad09f33ec5cba0902880a9285f63e1942c863f1a6c1",
+    "schemas/ProfileResponse.json": "d2c1a235035fb95cd37b709c06ab253671651557fb052e7d0850440735e492a9",
+    "schemas/VoiceTokenResponse.json": "5b11c8139f5731a5616ba318294ca1a6277601f1a6251ac9af457433b1d7b545"
+  }
+}

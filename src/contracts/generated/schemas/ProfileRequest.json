@@ -1,0 +1,47 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "InterviewAnswer": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Answer",
+          "type": "string"
+        },
+        "questionId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Questionid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "questionId",
+        "answer"
+      ],
+      "title": "InterviewAnswer",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "answers": {
+      "items": {
+        "$ref": "#/$defs/InterviewAnswer"
+      },
+      "maxItems": 6,
+      "title": "Answers",
+      "type": "array"
+    },
+    "transcript": {
+      "default": "",
+      "maxLength": 8000,
+      "title": "Transcript",
+      "type": "string"
+    }
+  },
+  "title": "ProfileRequest",
+  "type": "object"
+}

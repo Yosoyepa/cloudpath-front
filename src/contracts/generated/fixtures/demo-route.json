@@ -1,0 +1,209 @@
+{
+  "routeVersion": 1,
+  "nodes": [
+    {
+      "id": "cloud-value-proposition",
+      "domain": "cloud_concepts",
+      "title": "Qué es la nube y cuál es su propuesta de valor",
+      "format": "video",
+      "durationMinutes": 10,
+      "mastery": 72,
+      "status": "mastered",
+      "prerequisites": [],
+      "sourceRefs": [
+        {
+          "title": "¿Qué es la computación en la nube?",
+          "url": "https://aws.amazon.com/what-is-cloud-computing/",
+          "provider": "AWS",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "cloud-deployment-models",
+      "domain": "cloud_concepts",
+      "title": "Modelos de despliegue: nube, híbrido y on-premises",
+      "format": "video",
+      "durationMinutes": 12,
+      "mastery": 48,
+      "status": "in_progress",
+      "prerequisites": [
+        "cloud-value-proposition"
+      ],
+      "sourceRefs": [
+        {
+          "title": "Tipos de computación en la nube",
+          "url": "https://aws.amazon.com/types-of-cloud-computing/",
+          "provider": "AWS",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "global-infrastructure-regions-az",
+      "domain": "cloud_technology_and_services",
+      "title": "Infraestructura global: regiones, zonas de disponibilidad y edge",
+      "format": "video",
+      "durationMinutes": 14,
+      "mastery": 30,
+      "status": "available",
+      "prerequisites": [
+        "cloud-deployment-models"
+      ],
+      "sourceRefs": [
+        {
+          "title": "Infraestructura global de AWS",
+          "url": "https://aws.amazon.com/about-aws/global-infrastructure/",
+          "provider": "AWS",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "security-shared-responsibility",
+      "domain": "security_and_compliance",
+      "title": "Modelo de responsabilidad compartida de AWS",
+      "format": "video",
+      "durationMinutes": 15,
+      "mastery": 18,
+      "status": "available",
+      "prerequisites": [
+        "cloud-deployment-models"
+      ],
+      "sourceRefs": [
+        {
+          "title": "Modelo de responsabilidad compartida",
+          "url": "https://aws.amazon.com/compliance/shared-responsibility-model/",
+          "provider": "AWS",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "security-iam-fundamentals",
+      "domain": "security_and_compliance",
+      "title": "Fundamentos de IAM: usuarios, grupos, roles y políticas",
+      "format": "practice",
+      "durationMinutes": 20,
+      "mastery": 10,
+      "status": "available",
+      "prerequisites": [
+        "security-shared-responsibility"
+      ],
+      "sourceRefs": [
+        {
+          "title": "What is IAM? (AWS IAM User Guide)",
+          "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+          "provider": "AWS Documentation",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        },
+        {
+          "title": "Policies and permissions in AWS Identity and Access Management",
+          "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html",
+          "provider": "AWS Documentation",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "compute-ec2-basics",
+      "domain": "cloud_technology_and_services",
+      "title": "Cómputo con Amazon EC2: instancias, AMI y ciclo de vida",
+      "format": "video",
+      "durationMinutes": 20,
+      "mastery": 12,
+      "status": "locked",
+      "prerequisites": [
+        "global-infrastructure-regions-az"
+      ],
+      "sourceRefs": [
+        {
+          "title": "What is Amazon EC2?",
+          "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
+          "provider": "AWS Documentation",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "storage-s3-basics",
+      "domain": "cloud_technology_and_services",
+      "title": "Almacenamiento de objetos con Amazon S3 y sus clases",
+      "format": "practice",
+      "durationMinutes": 18,
+      "mastery": 8,
+      "status": "locked",
+      "prerequisites": [
+        "global-infrastructure-regions-az"
+      ],
+      "sourceRefs": [
+        {
+          "title": "What is Amazon S3?",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+          "provider": "AWS Documentation",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    },
+    {
+      "id": "billing-pricing-models",
+      "domain": "billing_pricing_and_support",
+      "title": "Modelos de precios de AWS y opciones de compra de EC2",
+      "format": "practice",
+      "durationMinutes": 18,
+      "mastery": 0,
+      "status": "locked",
+      "prerequisites": [
+        "compute-ec2-basics"
+      ],
+      "sourceRefs": [
+        {
+          "title": "Precios de AWS",
+          "url": "https://aws.amazon.com/pricing/",
+          "provider": "AWS",
+          "retrievedAt": "2026-07-24T09:00:00Z",
+          "cached": true
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "cloud-value-proposition",
+      "target": "cloud-deployment-models"
+    },
+    {
+      "source": "cloud-deployment-models",
+      "target": "global-infrastructure-regions-az"
+    },
+    {
+      "source": "cloud-deployment-models",
+      "target": "security-shared-responsibility"
+    },
+    {
+      "source": "security-shared-responsibility",
+      "target": "security-iam-fundamentals"
+    },
+    {
+      "source": "global-infrastructure-regions-az",
+      "target": "compute-ec2-basics"
+    },
+    {
+      "source": "global-infrastructure-regions-az",
+      "target": "storage-s3-basics"
+    },
+    {
+      "source": "compute-ec2-basics",
+      "target": "billing-pricing-models"
+    }
+  ],
+  "activeNodeId": "security-iam-fundamentals"
+}

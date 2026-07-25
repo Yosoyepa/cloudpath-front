@@ -1,0 +1,199 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "Attempt": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Answer",
+          "type": "string"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence"
+        },
+        "correct": {
+          "title": "Correct",
+          "type": "boolean"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "title": "Createdat",
+          "type": "string"
+        },
+        "hintsUsed": {
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Hintsused",
+          "type": "integer"
+        },
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "responseTimeMs": {
+          "maximum": 600000,
+          "minimum": 0,
+          "title": "Responsetimems",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "nodeId",
+        "answer",
+        "correct",
+        "confidence",
+        "responseTimeMs",
+        "hintsUsed",
+        "createdAt"
+      ],
+      "title": "Attempt",
+      "type": "object"
+    },
+    "Confidence": {
+      "description": "Only two levels exist so the deterministic matrix stays exhaustive.",
+      "enum": [
+        "low",
+        "high"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "Domain": {
+      "enum": [
+        "cloud_concepts",
+        "security_and_compliance",
+        "cloud_technology_and_services",
+        "billing_pricing_and_support"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "ExperienceLevel": {
+      "enum": [
+        "none",
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "title": "ExperienceLevel",
+      "type": "string"
+    },
+    "LearnerProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "examDate": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Examdate"
+        },
+        "experienceLevel": {
+          "$ref": "#/$defs/ExperienceLevel"
+        },
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/Domain"
+          },
+          "maxItems": 4,
+          "title": "Gaps",
+          "type": "array"
+        },
+        "goal": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Goal",
+          "type": "string"
+        },
+        "preferredFormats": {
+          "items": {
+            "$ref": "#/$defs/LearningFormat"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Preferredformats",
+          "type": "array"
+        },
+        "strengths": {
+          "items": {
+            "$ref": "#/$defs/Domain"
+          },
+          "maxItems": 4,
+          "title": "Strengths",
+          "type": "array"
+        },
+        "weeklyMinutes": {
+          "maximum": 1200,
+          "minimum": 30,
+          "title": "Weeklyminutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "goal",
+        "weeklyMinutes",
+        "experienceLevel",
+        "preferredFormats"
+      ],
+      "title": "LearnerProfile",
+      "type": "object"
+    },
+    "LearningFormat": {
+      "enum": [
+        "video",
+        "text",
+        "practice",
+        "oral_explanation"
+      ],
+      "title": "LearningFormat",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attempts": {
+      "items": {
+        "$ref": "#/$defs/Attempt"
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Attempts",
+      "type": "array"
+    },
+    "nodeIds": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 24,
+      "minItems": 1,
+      "title": "Nodeids",
+      "type": "array"
+    },
+    "profile": {
+      "$ref": "#/$defs/LearnerProfile"
+    },
+    "routeVersion": {
+      "minimum": 1,
+      "title": "Routeversion",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "profile",
+    "routeVersion",
+    "nodeIds",
+    "attempts"
+  ],
+  "title": "AdaptRequest",
+  "type": "object"
+}

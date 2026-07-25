@@ -1,0 +1,186 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "AssessmentQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "correctOptionIndex": {
+          "maximum": 4,
+          "minimum": 0,
+          "title": "Correctoptionindex",
+          "type": "integer"
+        },
+        "explanation": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "prompt": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Prompt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "prompt",
+        "options",
+        "correctOptionIndex",
+        "explanation"
+      ],
+      "title": "AssessmentQuestion",
+      "type": "object"
+    },
+    "LearningFormat": {
+      "enum": [
+        "video",
+        "text",
+        "practice",
+        "oral_explanation"
+      ],
+      "title": "LearningFormat",
+      "type": "string"
+    },
+    "Lesson": {
+      "additionalProperties": false,
+      "properties": {
+        "activity": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Activity",
+          "type": "string"
+        },
+        "content": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Content",
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/$defs/LearningFormat"
+        },
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "question": {
+          "$ref": "#/$defs/AssessmentQuestion"
+        },
+        "sourceRefs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Sourcerefs",
+          "type": "array"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "nodeId",
+        "title",
+        "format",
+        "content",
+        "activity",
+        "question",
+        "sourceRefs"
+      ],
+      "title": "Lesson",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "cached": {
+          "title": "Cached",
+          "type": "boolean"
+        },
+        "provider": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrievedAt": {
+          "format": "date-time",
+          "title": "Retrievedat",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "provider",
+        "retrievedAt",
+        "cached"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "degraded": {
+      "title": "Degraded",
+      "type": "boolean"
+    },
+    "lesson": {
+      "$ref": "#/$defs/Lesson"
+    },
+    "source": {
+      "enum": [
+        "claude",
+        "minimax",
+        "aws_knowledge_mcp",
+        "local_catalog"
+      ],
+      "title": "Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "lesson",
+    "degraded",
+    "source"
+  ],
+  "title": "LessonResponse",
+  "type": "object"
+}

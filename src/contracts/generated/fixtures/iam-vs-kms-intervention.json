@@ -1,0 +1,28 @@
+{
+  "id": "security-iam-vs-kms",
+  "domain": "security_and_compliance",
+  "title": "IAM frente a KMS: control de acceso y cifrado no son lo mismo",
+  "format": "video",
+  "durationMinutes": 12,
+  "mastery": 5,
+  "status": "available",
+  "prerequisites": [
+    "security-iam-fundamentals"
+  ],
+  "sourceRefs": [
+    {
+      "title": "What is IAM? Control de acceso a los recursos de AWS",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    },
+    {
+      "title": "What is AWS Key Management Service?",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    }
+  ]
+}

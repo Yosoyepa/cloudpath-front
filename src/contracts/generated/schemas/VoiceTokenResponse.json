@@ -1,0 +1,38 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "additionalProperties": false,
+  "properties": {
+    "degraded": {
+      "title": "Degraded",
+      "type": "boolean"
+    },
+    "expiresAt": {
+      "format": "date-time",
+      "title": "Expiresat",
+      "type": "string"
+    },
+    "maxUses": {
+      "maximum": 2,
+      "minimum": 1,
+      "title": "Maxuses",
+      "type": "integer"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "token": {
+      "title": "Token",
+      "type": "string"
+    }
+  },
+  "required": [
+    "token",
+    "expiresAt",
+    "model",
+    "maxUses",
+    "degraded"
+  ],
+  "title": "VoiceTokenResponse",
+  "type": "object"
+}

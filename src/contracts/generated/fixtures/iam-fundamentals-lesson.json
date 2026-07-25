@@ -1,0 +1,35 @@
+{
+  "nodeId": "security-iam-fundamentals",
+  "title": "Fundamentos de IAM: quién puede hacer qué",
+  "format": "practice",
+  "content": "AWS Identity and Access Management (IAM) administra identidades y permisos en AWS.\n\nLos usuarios representan personas o aplicaciones con una identidad permanente. Los roles entregan credenciales temporales a personas, aplicaciones o servicios. Las políticas declaran qué acciones se permiten o se deniegan sobre recursos concretos.\n\nEl principio de mínimo privilegio consiste en conceder únicamente los permisos necesarios para realizar una tarea. Para una aplicación que corre en Amazon EC2, un rol evita guardar claves de acceso permanentes dentro de la instancia.",
+  "activity": "Clasifica estos tres casos como usuario, rol o política: una persona que entra a la consola, una instancia EC2 que lee objetos de S3 y una regla que permite únicamente s3:GetObject. Explica qué permiso mínimo requiere cada caso.",
+  "question": {
+    "id": "iam-fundamentals-q1",
+    "prompt": "Una aplicación en Amazon EC2 necesita leer objetos de un bucket de Amazon S3 sin guardar claves permanentes. ¿Qué opción es la adecuada?",
+    "options": [
+      "Crear un usuario IAM y copiar sus claves de acceso a la instancia",
+      "Asociar a la instancia un rol IAM con permiso mínimo de lectura",
+      "Cifrar el bucket con una clave administrada en AWS KMS",
+      "Hacer público el bucket mediante una política de recursos"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Un rol IAM entrega credenciales temporales a la instancia y evita secretos permanentes. La política asociada al rol debe limitarse a las acciones y recursos que la aplicación realmente necesita."
+  },
+  "sourceRefs": [
+    {
+      "title": "What is IAM?",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    },
+    {
+      "title": "IAM roles",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    }
+  ]
+}

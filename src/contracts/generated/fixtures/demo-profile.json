@@ -1,0 +1,16 @@
+{
+  "goal": "Aprobar el examen AWS Certified Cloud Practitioner en dos meses para postular a un puesto junior de soporte en la nube",
+  "examDate": "2026-09-19T00:00:00Z",
+  "weeklyMinutes": 150,
+  "experienceLevel": "beginner",
+  "preferredFormats": [
+    "video",
+    "practice"
+  ],
+  "strengths": [
+    "cloud_concepts"
+  ],
+  "gaps": [
+    "security_and_compliance"
+  ]
+}

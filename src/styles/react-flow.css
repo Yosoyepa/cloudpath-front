@@ -1,0 +1,485 @@
+@import "@xyflow/react/dist/style.css";
+
+/*
+ * React Flow is lazy-loaded with RoutePage, so this stylesheet is only
+ * imported by RoutePage.tsx and ships inside the deferred map chunk.
+ * State is never encoded by color alone: every colored element pairs with
+ * an icon and a text label rendered by AdaptiveMapNode.
+ */
+
+.route-page {
+  width: min(100% - 2rem, 80rem);
+  margin: 0 auto;
+  padding-block: 2.5rem 3rem;
+}
+
+.route-page__header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 630;
+  letter-spacing: -0.03em;
+}
+
+.route-page__lead {
+  margin: 0.6rem 0 0;
+  max-width: 40rem;
+  color: #94a3b8;
+}
+
+.route-next-step {
+  display: grid;
+  margin-top: 1.5rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  border: 1px solid rgb(34 211 238 / 0.36);
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background:
+    linear-gradient(110deg, rgb(34 211 238 / 0.08), transparent 50%),
+    rgb(15 23 42 / 0.72);
+}
+
+.route-next-step__icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgb(34 211 238 / 0.3);
+  border-radius: 0.8rem;
+  color: var(--color-signal);
+}
+
+.route-next-step div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.route-next-step div > span,
+.route-next-step small {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.route-next-step strong {
+  font-family: var(--font-display);
+}
+
+.route-page__empty {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  margin-top: 2.5rem;
+  border: 1px solid #25324a;
+  border-radius: 1rem;
+  background: rgb(15 23 42 / 0.6);
+  padding: 2rem;
+  color: #94a3b8;
+}
+
+.learning-map {
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 40rem) {
+  .route-page {
+    width: min(100% - 1.25rem, 80rem);
+  }
+
+  .route-next-step {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .route-next-step .button {
+    grid-column: 1 / -1;
+  }
+}
+
+.learning-map__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.learning-map__summary {
+  margin: 0;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.learning-map__toggle {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #25324a;
+  border-radius: 999px;
+  background: rgb(15 23 42 / 0.7);
+  padding: 0.55rem 0.95rem;
+  color: #f8fafc;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.learning-map__toggle:hover {
+  border-color: rgb(34 211 238 / 0.55);
+}
+
+.learning-map__toggle:focus-visible,
+.map-node__open:focus-visible,
+.route-text-view__link:focus-visible {
+  outline: 3px solid rgb(196 181 253 / 0.8);
+  outline-offset: 2px;
+}
+
+.learning-map__warnings {
+  margin: 0 0 0.75rem;
+  border: 1px solid rgb(251 146 60 / 0.45);
+  border-radius: 0.75rem;
+  background: rgb(251 146 60 / 0.08);
+  padding: 0.6rem 0.9rem;
+  color: #fb923c;
+  font-size: 0.85rem;
+}
+
+.learning-map__canvas {
+  overflow: hidden;
+  border: 1px solid #25324a;
+  border-radius: 1rem;
+  background: #070b18;
+  height: clamp(24rem, 62vh, 36rem);
+}
+
+.learning-map__canvas .react-flow {
+  background:
+    radial-gradient(circle at 85% 8%, rgb(139 92 246 / 0.08), transparent 22rem),
+    #070b18;
+}
+
+/* Nodes */
+
+.react-flow__node-adaptive {
+  font-family: var(--font-sans);
+}
+
+.react-flow__node-adaptive:focus-visible {
+  outline: none;
+}
+
+.react-flow__node-adaptive:focus-visible .map-node {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgb(196 181 253 / 0.45);
+}
+
+.map-node {
+  position: relative;
+  width: 224px;
+  height: 116px;
+  border: 1px solid #25324a;
+  border-radius: 1rem;
+  background: #0f172a;
+  color: #f8fafc;
+  box-shadow: 0 8px 24px rgb(2 6 18 / 0.45);
+}
+
+.map-node__open,
+.map-node__static {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  align-content: start;
+  gap: 0.3rem;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  padding: 0.7rem 0.8rem;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.map-node__open {
+  cursor: pointer;
+}
+
+.map-node__open:hover .map-node__title {
+  color: #67e8f9;
+}
+
+.map-node__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.map-node__title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.map-node__meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.map-node__hint {
+  overflow: hidden;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-node__bar {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.55rem;
+  left: 0.8rem;
+  overflow: hidden;
+  height: 3px;
+  border-radius: 999px;
+  background: rgb(37 50 74 / 0.9);
+}
+
+.map-node__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #22d3ee;
+}
+
+.map-node__handle {
+  visibility: hidden;
+}
+
+/* Status accents: color always reinforces the visible text label and icon. */
+
+.map-node--active {
+  border-color: rgb(34 211 238 / 0.75);
+  box-shadow:
+    0 0 0 1px rgb(34 211 238 / 0.35),
+    0 8px 28px rgb(34 211 238 / 0.16);
+}
+
+.map-node--active .map-node__status {
+  color: #22d3ee;
+}
+
+.map-node--available .map-node__status {
+  color: #a5b4cf;
+}
+
+.map-node--in_progress .map-node__status {
+  color: #22d3ee;
+}
+
+.map-node--mastered {
+  border-color: rgb(52 211 153 / 0.5);
+}
+
+.map-node--mastered .map-node__status,
+.map-node--mastered .map-node__bar-fill {
+  color: #34d399;
+}
+
+.map-node--mastered .map-node__bar-fill {
+  background: #34d399;
+}
+
+.map-node--needs_review {
+  border-color: rgb(251 146 60 / 0.65);
+}
+
+.map-node--needs_review .map-node__status {
+  color: #fb923c;
+}
+
+.map-node--locked {
+  border-style: dashed;
+  background: rgb(15 23 42 / 0.55);
+  color: #94a3b8;
+}
+
+.map-node--locked .map-node__title {
+  color: #94a3b8;
+}
+
+/* Edges */
+
+.learning-edge {
+  stroke: #3b4c6b;
+  stroke-width: 1.5;
+}
+
+.learning-edge--active {
+  stroke: #22d3ee;
+  stroke-width: 2;
+}
+
+.learning-edge--gap {
+  stroke: #fb923c;
+  stroke-dasharray: 6 4;
+  stroke-width: 2;
+}
+
+.react-flow__edge:focus-visible .learning-edge {
+  stroke: #c4b5fd;
+  stroke-width: 2.5;
+}
+
+.react-flow__edge-textbg {
+  fill: #0f172a;
+}
+
+.react-flow__edge-text {
+  fill: #94a3b8;
+  font-size: 11px;
+}
+
+/* Controls */
+
+.react-flow__controls {
+  overflow: hidden;
+  border: 1px solid #25324a;
+  border-radius: 0.75rem;
+  box-shadow: none;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid #25324a;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.react-flow__controls-button:hover {
+  background: #111c33;
+}
+
+.react-flow__controls-button:focus-visible {
+  outline: 2px solid rgb(196 181 253 / 0.8);
+  outline-offset: -2px;
+}
+
+.react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+.react-flow__attribution {
+  background: rgb(7 11 24 / 0.7);
+  color: #94a3b8;
+}
+
+/* Text equivalent */
+
+.route-text-view {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.route-text-view__item {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, auto) 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  border: 1px solid #25324a;
+  border-radius: 0.9rem;
+  background: rgb(15 23 42 / 0.6);
+  padding: 0.85rem 1rem;
+  counter-increment: step;
+}
+
+.route-text-view__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.route-text-view__status::before {
+  content: counter(step, decimal-leading-zero);
+  color: #22d3ee;
+}
+
+.route-text-view__body {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.route-text-view__link {
+  width: fit-content;
+  border-radius: 0.35rem;
+  color: #67e8f9;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.route-text-view__link:hover {
+  text-decoration: underline;
+}
+
+.route-text-view__title {
+  font-weight: 650;
+}
+
+.route-text-view__meta,
+.route-text-view__hint {
+  color: #94a3b8;
+  font-size: 0.78rem;
+}
+
+.route-text-view__meta {
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 40rem) {
+  .route-page {
+    width: min(100% - 1.25rem, 80rem);
+    padding-block: 1.5rem 2rem;
+  }
+
+  .learning-map__canvas {
+    height: clamp(20rem, 58vh, 28rem);
+  }
+
+  .route-text-view__item {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-node,
+  .learning-edge,
+  .map-node__open {
+    transition: none !important;
+    animation: none !important;
+  }
+}

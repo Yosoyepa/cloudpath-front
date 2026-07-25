@@ -1,0 +1,76 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "ProviderName": {
+      "enum": [
+        "gemini_live",
+        "claude",
+        "minimax",
+        "aws_knowledge_mcp"
+      ],
+      "title": "ProviderName",
+      "type": "string"
+    },
+    "ProviderState": {
+      "enum": [
+        "ready",
+        "degraded",
+        "unavailable",
+        "not_configured"
+      ],
+      "title": "ProviderState",
+      "type": "string"
+    },
+    "ProviderStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/ProviderName"
+        },
+        "state": {
+          "$ref": "#/$defs/ProviderState"
+        }
+      },
+      "required": [
+        "provider",
+        "state"
+      ],
+      "title": "ProviderStatus",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "certification": {
+      "title": "Certification",
+      "type": "string"
+    },
+    "providers": {
+      "items": {
+        "$ref": "#/$defs/ProviderStatus"
+      },
+      "title": "Providers",
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "degraded"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "version",
+    "certification",
+    "providers"
+  ],
+  "title": "HealthResponse",
+  "type": "object"
+}

@@ -1,0 +1,374 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "AdaptationDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "diagnosis": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Diagnosis",
+          "type": "string"
+        },
+        "operations": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "insert_node": "#/$defs/InsertNodeOperation",
+                "reinforce_node": "#/$defs/ReinforceNodeOperation",
+                "reorder_after": "#/$defs/ReorderAfterOperation",
+                "replace_format": "#/$defs/ReplaceFormatOperation",
+                "unlock_node": "#/$defs/UnlockNodeOperation"
+              },
+              "propertyName": "type"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/InsertNodeOperation"
+              },
+              {
+                "$ref": "#/$defs/ReinforceNodeOperation"
+              },
+              {
+                "$ref": "#/$defs/UnlockNodeOperation"
+              },
+              {
+                "$ref": "#/$defs/ReorderAfterOperation"
+              },
+              {
+                "$ref": "#/$defs/ReplaceFormatOperation"
+              }
+            ]
+          },
+          "maxItems": 4,
+          "title": "Operations",
+          "type": "array"
+        },
+        "rationale": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "requestRouteVersion": {
+          "minimum": 1,
+          "title": "Requestrouteversion",
+          "type": "integer"
+        },
+        "sourceRefs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 5,
+          "title": "Sourcerefs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requestRouteVersion",
+        "diagnosis",
+        "rationale",
+        "operations"
+      ],
+      "title": "AdaptationDecision",
+      "type": "object"
+    },
+    "Domain": {
+      "enum": [
+        "cloud_concepts",
+        "security_and_compliance",
+        "cloud_technology_and_services",
+        "billing_pricing_and_support"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "InsertNodeOperation": {
+      "additionalProperties": false,
+      "properties": {
+        "afterNodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Afternodeid",
+          "type": "string"
+        },
+        "node": {
+          "$ref": "#/$defs/LearningNode"
+        },
+        "type": {
+          "const": "insert_node",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "node",
+        "afterNodeId"
+      ],
+      "title": "InsertNodeOperation",
+      "type": "object"
+    },
+    "LearningFormat": {
+      "enum": [
+        "video",
+        "text",
+        "practice",
+        "oral_explanation"
+      ],
+      "title": "LearningFormat",
+      "type": "string"
+    },
+    "LearningNode": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "durationMinutes": {
+          "maximum": 45,
+          "minimum": 3,
+          "title": "Durationminutes",
+          "type": "integer"
+        },
+        "format": {
+          "$ref": "#/$defs/LearningFormat"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mastery": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Mastery",
+          "type": "integer"
+        },
+        "prerequisites": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "title": "Prerequisites",
+          "type": "array"
+        },
+        "sourceRefs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 5,
+          "title": "Sourcerefs",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/NodeStatus"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "domain",
+        "title",
+        "format",
+        "durationMinutes",
+        "mastery",
+        "status"
+      ],
+      "title": "LearningNode",
+      "type": "object"
+    },
+    "NodeStatus": {
+      "enum": [
+        "locked",
+        "available",
+        "in_progress",
+        "mastered",
+        "needs_review"
+      ],
+      "title": "NodeStatus",
+      "type": "string"
+    },
+    "ReinforceNodeOperation": {
+      "additionalProperties": false,
+      "properties": {
+        "masteryDelta": {
+          "maximum": 30,
+          "minimum": -30,
+          "title": "Masterydelta",
+          "type": "integer"
+        },
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "type": {
+          "const": "reinforce_node",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "nodeId",
+        "masteryDelta"
+      ],
+      "title": "ReinforceNodeOperation",
+      "type": "object"
+    },
+    "ReorderAfterOperation": {
+      "additionalProperties": false,
+      "properties": {
+        "afterNodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Afternodeid",
+          "type": "string"
+        },
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "type": {
+          "const": "reorder_after",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "nodeId",
+        "afterNodeId"
+      ],
+      "title": "ReorderAfterOperation",
+      "type": "object"
+    },
+    "ReplaceFormatOperation": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "$ref": "#/$defs/LearningFormat"
+        },
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "type": {
+          "const": "replace_format",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "nodeId",
+        "format"
+      ],
+      "title": "ReplaceFormatOperation",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "cached": {
+          "title": "Cached",
+          "type": "boolean"
+        },
+        "provider": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrievedAt": {
+          "format": "date-time",
+          "title": "Retrievedat",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "provider",
+        "retrievedAt",
+        "cached"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "UnlockNodeOperation": {
+      "additionalProperties": false,
+      "properties": {
+        "nodeId": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Nodeid",
+          "type": "string"
+        },
+        "type": {
+          "const": "unlock_node",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "nodeId"
+      ],
+      "title": "UnlockNodeOperation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "$ref": "#/$defs/AdaptationDecision"
+    },
+    "degraded": {
+      "title": "Degraded",
+      "type": "boolean"
+    },
+    "source": {
+      "enum": [
+        "claude",
+        "minimax",
+        "deterministic"
+      ],
+      "title": "Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision",
+    "degraded",
+    "source"
+  ],
+  "title": "AdaptResponse",
+  "type": "object"
+}

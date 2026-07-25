@@ -1,0 +1,42 @@
+{
+  "nodeId": "security-iam-vs-kms",
+  "title": "IAM frente a KMS: quién puede entrar y qué queda ilegible",
+  "format": "video",
+  "content": "Dos preguntas distintas\n\nIAM y KMS resuelven problemas diferentes y no se sustituyen entre sí.\n\n- AWS Identity and Access Management (IAM) responde: ¿quién puede hacer qué sobre cuáles recursos de AWS? Es control de acceso. Con usuarios, grupos, roles y políticas decides si una identidad puede ejecutar s3:GetObject sobre un bucket. Si la política deniega la acción, la llamada a la API se rechaza.\n- AWS Key Management Service (KMS) responde: ¿los datos son legibles fuera de su contexto autorizado? Es cifrado. KMS crea y custodia claves, y los servicios de AWS las usan para cifrar objetos, volúmenes y snapshots. Sin la clave, el contenido es ruido.\n\nLa analogía\n\nIAM es la lista de invitados de la puerta: define quién entra. KMS es la caja fuerte que está dentro: aunque alguien saque la caja del edificio, no puede leer lo que hay adentro sin la clave.\n\nPor qué una política de IAM no cifra nada\n\nUna política de IAM nunca transforma los bytes. Si copias un objeto de S3 sin cifrar a un disco propio, la política se queda en AWS y el archivo se lee sin problema. Al revés también aplica: un objeto cifrado con KMS pero con permisos demasiado amplios se descifra automáticamente para cualquier identidad autorizada a leerlo, porque S3 pide la clave a KMS en su nombre.\n\nSe necesitan las dos capas\n\n1. IAM limita quién puede llamar a la API.\n2. El cifrado con KMS limita quién puede convertir esos bytes en información, incluso si salen del servicio.\n3. La política de la clave de KMS (key policy) es una tercera capa: controla quién puede usar la clave, no quién puede tocar el objeto.\n\nSeñales para el examen\n\n- \"Datos ilegibles\", \"en reposo\", \"en tránsito\", \"rotación de claves\", \"custodia de claves\" apuntan a KMS.\n- \"Permisos\", \"acceso mínimo privilegio\", \"rol\", \"usuario\", \"denegar acción\" apuntan a IAM.\n- Si el requisito habla de un auditor que exige que el dato no se pueda leer fuera de AWS, la respuesta es cifrado, no permisos.\n\nRecuerda el modelo de responsabilidad compartida: AWS protege la infraestructura y ofrece KMS e IAM; tú decides las políticas y activas el cifrado.",
+  "activity": "Práctica de tres minutos. Toma estos tres requisitos y clasifícalos en voz alta como IAM, KMS o ambos, y di por qué:\n\n1. \"El equipo de soporte solo debe poder listar los objetos del bucket de facturas, nunca descargarlos.\"\n2. \"Si un backup se copia por error a un disco externo, el contenido debe ser ilegible.\"\n3. \"La aplicación puede leer los objetos, pero la clave que los protege debe rotarse cada año y su uso debe quedar auditado.\"\n\nRespuestas: 1 es IAM, 2 es KMS, 3 es ambos (IAM da el permiso de lectura, KMS rota y audita la clave). Después escribe una frase propia que empiece con \"IAM decide... y KMS decide...\".",
+  "question": {
+    "id": "iam-vs-kms-q1",
+    "prompt": "Un auditor exige que los archivos de un bucket de Amazon S3 queden ilegibles incluso si alguien logra copiarlos fuera de AWS. ¿Qué medida cumple ese requisito?",
+    "options": [
+      "Una política de IAM que deniegue s3:GetObject a todas las identidades externas a la cuenta",
+      "Habilitar el cifrado en reposo del bucket con una clave administrada en AWS KMS",
+      "Un grupo de seguridad que restrinja el acceso al bucket al puerto 443",
+      "Una política de contraseñas de IAM más estricta con MFA obligatorio"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "La opción correcta es el cifrado con AWS KMS. Una política de IAM controla quién puede llamar a la API de S3, pero no transforma los bytes: si el archivo sale de AWS sin cifrar, se lee sin necesidad de permisos. El cifrado en reposo con una clave de KMS hace que el contenido sea inútil sin acceso a esa clave. Los grupos de seguridad protegen tráfico de red hacia instancias y no aplican a buckets de S3, y la política de contraseñas con MFA refuerza la autenticación, no la confidencialidad del dato. Regla práctica: IAM decide quién entra, KMS decide qué queda ilegible."
+  },
+  "sourceRefs": [
+    {
+      "title": "What is IAM? Control de acceso a los recursos de AWS",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    },
+    {
+      "title": "What is AWS Key Management Service?",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    },
+    {
+      "title": "Protecting data with server-side encryption in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html",
+      "provider": "AWS Documentation",
+      "retrievedAt": "2026-07-24T09:00:00Z",
+      "cached": true
+    }
+  ]
+}

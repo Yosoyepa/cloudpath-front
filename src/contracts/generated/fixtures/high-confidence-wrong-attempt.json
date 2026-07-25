@@ -1,0 +1,9 @@
+{
+  "nodeId": "security-iam-fundamentals",
+  "answer": "Cifrar el bucket con una clave administrada en AWS KMS",
+  "correct": false,
+  "confidence": "high",
+  "responseTimeMs": 4200,
+  "hintsUsed": 0,
+  "createdAt": "2026-07-24T15:12:04Z"
+}

@@ -1,0 +1,28 @@
+{
+  "outcomes": [
+    {
+      "correct": true,
+      "confidence": "high",
+      "masteryDelta": 12,
+      "intervention": "advance"
+    },
+    {
+      "correct": true,
+      "confidence": "low",
+      "masteryDelta": 8,
+      "intervention": "reinforce"
+    },
+    {
+      "correct": false,
+      "confidence": "high",
+      "masteryDelta": -15,
+      "intervention": "correct_mental_model"
+    },
+    {
+      "correct": false,
+      "confidence": "low",
+      "masteryDelta": -8,
+      "intervention": "return_to_prerequisite"
+    }
+  ]
+}

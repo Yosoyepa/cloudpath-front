@@ -1,0 +1,255 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #070b18;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 76% 10%, rgb(139 92 246 / 0.12), transparent 28rem),
+    #070b18;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-160%);
+  border-radius: 999px;
+  background: #f8fafc;
+  padding: 0.7rem 1rem;
+  color: #070b18;
+  font-weight: 700;
+  transition: transform 140ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  width: min(100% - 2rem, 80rem);
+  min-height: 4.75rem;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(37 50 74 / 0.72);
+}
+
+.site-header nav,
+.brand,
+.icon-link,
+.button,
+.eyebrow,
+.hero-actions,
+.route-proof {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header nav {
+  gap: 0.75rem;
+}
+
+.brand {
+  gap: 0.65rem;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.brand-mark {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-link {
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  color: #94a3b8;
+}
+
+.button {
+  min-height: 2.75rem;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.68rem 1rem;
+  text-decoration: none;
+  font-weight: 720;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid #c4b5fd;
+  outline-offset: 3px;
+}
+
+.button-primary {
+  background: #f8fafc;
+  color: #070b18;
+}
+
+.button-secondary {
+  border-color: #25324a;
+  background: rgb(15 23 42 / 0.7);
+}
+
+.landing-foundation,
+.page-placeholder {
+  width: min(100% - 2rem, 80rem);
+  margin: 0 auto;
+}
+
+.landing-foundation {
+  display: grid;
+  min-height: calc(100vh - 4.75rem);
+  align-content: center;
+  padding-block: 5rem;
+}
+
+.eyebrow {
+  width: fit-content;
+  gap: 0.5rem;
+  border: 1px solid rgb(34 211 238 / 0.25);
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  background: rgb(34 211 238 / 0.06);
+  color: #67e8f9;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.landing-foundation h1,
+.page-placeholder h1 {
+  max-width: 12ch;
+  margin: 1.5rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 9vw, 8rem);
+  font-weight: 630;
+  letter-spacing: -0.072em;
+  line-height: 0.88;
+}
+
+.landing-foundation h1 span {
+  color: #8b5cf6;
+}
+
+.landing-foundation > p {
+  max-width: 42rem;
+  margin: 1.6rem 0 0;
+  color: #a9b7cc;
+  font-size: clamp(1rem, 2vw, 1.28rem);
+  line-height: 1.65;
+}
+
+.hero-actions {
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.route-proof {
+  gap: 0.5rem;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.page-placeholder {
+  display: grid;
+  min-height: calc(100vh - 4.75rem);
+  place-items: center;
+  text-align: center;
+}
+
+.page-placeholder h1 {
+  max-width: 16ch;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+.page-loader {
+  display: grid;
+  min-height: 55vh;
+  place-items: center;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 40rem) {
+  .site-header {
+    width: min(100% - 1.25rem, 80rem);
+  }
+
+  .site-header .icon-link {
+    display: none;
+  }
+
+  .button-secondary {
+    padding-inline: 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .landing-foundation {
+    width: min(100% - 1.5rem, 80rem);
+    padding-block: 3.5rem;
+  }
+
+  .landing-foundation h1 {
+    font-size: clamp(3.2rem, 17vw, 5.2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

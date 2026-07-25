@@ -1,0 +1,318 @@
+{
+  "$comment": "Generated from cloudpath_api.models by `uv run cloudpath-contracts --write`. Do not edit by hand.",
+  "$defs": {
+    "Domain": {
+      "enum": [
+        "cloud_concepts",
+        "security_and_compliance",
+        "cloud_technology_and_services",
+        "billing_pricing_and_support"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "ExperienceLevel": {
+      "enum": [
+        "none",
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "title": "ExperienceLevel",
+      "type": "string"
+    },
+    "LearnerProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "examDate": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Examdate"
+        },
+        "experienceLevel": {
+          "$ref": "#/$defs/ExperienceLevel"
+        },
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/Domain"
+          },
+          "maxItems": 4,
+          "title": "Gaps",
+          "type": "array"
+        },
+        "goal": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Goal",
+          "type": "string"
+        },
+        "preferredFormats": {
+          "items": {
+            "$ref": "#/$defs/LearningFormat"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Preferredformats",
+          "type": "array"
+        },
+        "strengths": {
+          "items": {
+            "$ref": "#/$defs/Domain"
+          },
+          "maxItems": 4,
+          "title": "Strengths",
+          "type": "array"
+        },
+        "weeklyMinutes": {
+          "maximum": 1200,
+          "minimum": 30,
+          "title": "Weeklyminutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "goal",
+        "weeklyMinutes",
+        "experienceLevel",
+        "preferredFormats"
+      ],
+      "title": "LearnerProfile",
+      "type": "object"
+    },
+    "LearningEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target"
+      ],
+      "title": "LearningEdge",
+      "type": "object"
+    },
+    "LearningFormat": {
+      "enum": [
+        "video",
+        "text",
+        "practice",
+        "oral_explanation"
+      ],
+      "title": "LearningFormat",
+      "type": "string"
+    },
+    "LearningNode": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "durationMinutes": {
+          "maximum": 45,
+          "minimum": 3,
+          "title": "Durationminutes",
+          "type": "integer"
+        },
+        "format": {
+          "$ref": "#/$defs/LearningFormat"
+        },
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mastery": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Mastery",
+          "type": "integer"
+        },
+        "prerequisites": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "title": "Prerequisites",
+          "type": "array"
+        },
+        "sourceRefs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "maxItems": 5,
+          "title": "Sourcerefs",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/NodeStatus"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "domain",
+        "title",
+        "format",
+        "durationMinutes",
+        "mastery",
+        "status"
+      ],
+      "title": "LearningNode",
+      "type": "object"
+    },
+    "NodeStatus": {
+      "enum": [
+        "locked",
+        "available",
+        "in_progress",
+        "mastered",
+        "needs_review"
+      ],
+      "title": "NodeStatus",
+      "type": "string"
+    },
+    "RouteState": {
+      "additionalProperties": false,
+      "properties": {
+        "activeNodeId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Activenodeid"
+        },
+        "edges": {
+          "items": {
+            "$ref": "#/$defs/LearningEdge"
+          },
+          "maxItems": 48,
+          "title": "Edges",
+          "type": "array"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/LearningNode"
+          },
+          "maxItems": 24,
+          "minItems": 1,
+          "title": "Nodes",
+          "type": "array"
+        },
+        "routeVersion": {
+          "minimum": 1,
+          "title": "Routeversion",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "routeVersion",
+        "nodes"
+      ],
+      "title": "RouteState",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "cached": {
+          "title": "Cached",
+          "type": "boolean"
+        },
+        "provider": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrievedAt": {
+          "format": "date-time",
+          "title": "Retrievedat",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "provider",
+        "retrievedAt",
+        "cached"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "degraded": {
+      "title": "Degraded",
+      "type": "boolean"
+    },
+    "profile": {
+      "$ref": "#/$defs/LearnerProfile"
+    },
+    "route": {
+      "$ref": "#/$defs/RouteState"
+    },
+    "source": {
+      "enum": [
+        "claude",
+        "minimax",
+        "deterministic"
+      ],
+      "title": "Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile",
+    "route",
+    "degraded",
+    "source"
+  ],
+  "title": "ProfileResponse",
+  "type": "object"
+}
