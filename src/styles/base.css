@@ -111,6 +111,10 @@ a {
   mix-blend-mode: screen;
 }
 
+.app-shell--landing .ambient-background video {
+  opacity: 0.9;
+}
+
 @keyframes ambient-drift {
   from {
     transform: translate3d(-1.5%, -1%, 0) scale(1);

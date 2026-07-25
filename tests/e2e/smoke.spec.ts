@@ -208,6 +208,16 @@ test("la landing conserva CTA y ancho útil en desktop y mobile reducido", async
       "src",
       "/media/cloudpath-onboarding.mp4",
     );
+    await expect(page.locator(".app-shell")).toHaveClass(
+      /app-shell--landing/,
+    );
+    await expect
+      .poll(() =>
+        page
+          .locator(".ambient-background video")
+          .evaluate((video) => getComputedStyle(video).opacity),
+      )
+      .toBe("0.9");
     await expect(page.locator(".static-landing__steps")).toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(

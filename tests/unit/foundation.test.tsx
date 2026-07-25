@@ -18,5 +18,8 @@ describe("CloudPath foundation", () => {
     expect(
       document.querySelector(".ambient-background"),
     ).toHaveAttribute("aria-hidden", "true");
+    expect(document.querySelector(".app-shell")).toHaveClass(
+      "app-shell--landing",
+    );
   });
 });

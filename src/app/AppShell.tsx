@@ -6,6 +6,7 @@ import { AmbientBackground } from "../components/AmbientBackground";
 export function AppShell() {
   const location = useLocation();
   const mainRef = useRef<HTMLElement>(null);
+  const isLanding = location.pathname === "/";
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -25,7 +26,7 @@ export function AppShell() {
   }, [location.hash, location.key]);
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell${isLanding ? " app-shell--landing" : ""}`}>
       <AmbientBackground />
       <a className="skip-link" href="#main-content">
         Saltar al contenido
