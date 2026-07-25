@@ -1,0 +1,21 @@
+<svg width="360" height="96" viewBox="0 0 360 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cloudpath-gradient" x1="14" y1="14" x2="82" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4B5FD"/>
+      <stop offset="0.48" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <filter id="cloudpath-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g transform="translate(8 8)">
+    <circle cx="40" cy="40" r="30" stroke="#25324A" stroke-width="2"/>
+    <path d="M16 48C25 20 49 12 68 27C76 34 75 47 65 55C55 63 43 56 43 45C43 37 50 31 58 34" stroke="url(#cloudpath-gradient)" stroke-width="6" stroke-linecap="round" filter="url(#cloudpath-glow)"/>
+    <circle cx="16" cy="48" r="5" fill="#8B5CF6"/>
+    <circle cx="43" cy="45" r="5" fill="#22D3EE"/>
+    <circle cx="68" cy="27" r="5" fill="#C4B5FD"/>
+  </g>
+  <text x="100" y="58" fill="#F8FAFC" font-family="Space Grotesk, Inter, sans-serif" font-size="38" font-weight="600" letter-spacing="-1">CloudPath</text>
+</svg>

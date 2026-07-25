@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="icon-bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(154 126) rotate(48) scale(430)">
+      <stop stop-color="#1D1740"/>
+      <stop offset="0.55" stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#070B18"/>
+    </radialGradient>
+    <linearGradient id="icon-path" x1="98" y1="124" x2="402" y2="385" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4B5FD"/>
+      <stop offset="0.48" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <filter id="icon-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#icon-bg)"/>
+  <circle cx="256" cy="256" r="164" stroke="#25324A" stroke-width="8"/>
+  <path d="M113 293C154 151 281 104 381 181C428 217 420 286 366 330C310 376 239 337 239 276C239 229 280 194 326 211" stroke="url(#icon-path)" stroke-width="30" stroke-linecap="round" filter="url(#icon-glow)"/>
+  <circle cx="113" cy="293" r="24" fill="#8B5CF6"/>
+  <circle cx="239" cy="276" r="24" fill="#22D3EE"/>
+  <circle cx="381" cy="181" r="24" fill="#C4B5FD"/>
+</svg>

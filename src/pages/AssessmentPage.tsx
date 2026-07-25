@@ -124,17 +124,10 @@ export default function AssessmentPage() {
   return (
     <section className="assessment-page">
       <header className="assessment-header">
-        <div>
-          <p className="assessment-kicker">Señal de dominio · 01</p>
-          <h1>Decide como si fuera el examen.</h1>
-          <p className="assessment-node">{lesson.title}</p>
-        </div>
-        <div className="assessment-progress" aria-label="Progreso: 72 por ciento">
-          Ruta actual · 72%
-          <span aria-hidden="true">
-            <i />
-          </span>
-        </div>
+        <p className="assessment-kicker">Evaluación · {lesson.title}</p>
+        <h1>
+          Una pregunta. Tu respuesta y tu confianza cuentan como evidencia.
+        </h1>
       </header>
       <AssessmentForm
         question={lesson.question}

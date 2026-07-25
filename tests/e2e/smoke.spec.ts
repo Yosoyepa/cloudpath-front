@@ -116,7 +116,9 @@ async function runJudgedPath(browser: Browser, run: number) {
 
   await test.step(`recorrido determinista ${run}: evaluación`, async () => {
     await expect(
-      page.getByRole("heading", { name: "Decide como si fuera el examen." }),
+      page.getByRole("heading", {
+        name: "Una pregunta. Tu respuesta y tu confianza cuentan como evidencia.",
+      }),
     ).toBeVisible();
     await page
       .getByRole("radio", {
@@ -138,6 +140,7 @@ async function runJudgedPath(browser: Browser, run: number) {
     await expect(
       page.getByText(
         "IAM frente a KMS: control de acceso y cifrado no son lo mismo",
+        { exact: true },
       ),
     ).toBeVisible();
 
@@ -187,13 +190,13 @@ test("la landing conserva CTA y ancho útil en desktop y mobile reducido", async
 
     await expect(
       page.getByRole("heading", {
-        name: /Tu error cambia el camino/i,
+        name: /Tu ruta a AWS no debería empezar con otra pestaña/i,
       }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: /Construir mi ruta/i }).first(),
+      page.getByRole("link", { name: /Diseñar mi ruta/i }).first(),
     ).toBeVisible();
-    await expect(page.locator(".ignition-track--static")).toBeVisible();
+    await expect(page.locator(".static-landing__steps")).toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(
       () =>

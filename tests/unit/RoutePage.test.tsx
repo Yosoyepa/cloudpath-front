@@ -47,5 +47,11 @@ describe("RoutePage", () => {
         name: /Continuar con Qué es la nube y cuál es su propuesta de valor/,
       }),
     ).toHaveAttribute("href", "/lesson/cloud-value-proposition");
+    expect(
+      screen.getByRole("heading", { name: "Leyenda" }),
+    ).toBeVisible();
+    expect(
+      screen.getByText(/se recalibra cuando tu evidencia cambia/i),
+    ).toBeVisible();
   });
 });

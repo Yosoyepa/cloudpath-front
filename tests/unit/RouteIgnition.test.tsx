@@ -135,7 +135,7 @@ describe("RouteIgnition", () => {
 });
 
 describe("LandingPage", () => {
-  it("renders the Route Ignition scene as the landing", () => {
+  it("renders the exported static landing as the production entry", () => {
     mockMatchMedia();
     render(
       <MemoryRouter>
@@ -143,8 +143,20 @@ describe("LandingPage", () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("heading", { name: /tu error cambia el camino/i }),
+      screen.getByRole("heading", {
+        name: /tu ruta a aws no debería empezar con otra pestaña/i,
+      }),
     ).toBeVisible();
-    expect(screen.getByRole("link", { name: /construir mi ruta/i })).toBeVisible();
+    expect(
+      screen.getAllByRole("link", { name: /diseñar mi ruta/i }),
+    ).toHaveLength(2);
+    expect(
+      screen.getByRole("heading", {
+        name: "AWS Certified Cloud Practitioner",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: /tu ruta se dibuja contigo/i }),
+    ).toBeVisible();
   });
 });

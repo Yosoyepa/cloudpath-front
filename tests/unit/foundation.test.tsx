@@ -9,8 +9,14 @@ describe("CloudPath foundation", () => {
     expect(
       screen.getByRole("link", { name: /cloudpath, inicio/i }),
     ).toBeVisible();
+    expect(screen.getByRole("link", { name: "Mi ruta" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Fuentes" })).toHaveAttribute(
+      "href",
+      "/lesson/security-iam-fundamentals#sources",
+    );
+    expect(screen.getByText("© 2026 CloudPath")).toBeVisible();
     expect(
-      screen.getAllByRole("link", { name: /construir mi ruta/i }),
-    ).toHaveLength(2);
+      document.querySelector(".ambient-background"),
+    ).toHaveAttribute("aria-hidden", "true");
   });
 });

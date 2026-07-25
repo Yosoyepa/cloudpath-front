@@ -26,6 +26,10 @@ describe("LessonView", () => {
     expect(
       screen.getAllByRole("link", { name: /abrir .* pestaña nueva/i }),
     ).toHaveLength(lessonFixture.sourceRefs.length);
+    expect(document.getElementById("sources")).toHaveAttribute(
+      "aria-label",
+      "Fuentes oficiales",
+    );
   });
 
   it("makes fallback mode explicit", () => {

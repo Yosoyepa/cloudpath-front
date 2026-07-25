@@ -1,25 +1,74 @@
 .progressive-route {
-  border-top: 1px solid #25324a;
-  padding: 0.85rem 1rem 1rem;
+  padding: 1.5rem;
 }
 
 .progressive-route__heading {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.8rem;
-  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.progressive-route__heading h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.progressive-route__pill {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  border: 1px solid
+    color-mix(in oklch, var(--color-signal) 45%, var(--color-line));
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--color-signal) 14%, transparent);
+  padding: 0.3rem 0.7rem;
+  color: var(--color-signal);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.progressive-route__nodes {
+.progressive-route__canvas {
+  position: relative;
   display: grid;
-  gap: 0.75rem;
-  margin: 0;
+  min-height: 18.75rem;
+  overflow: hidden;
+  align-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(
+      1px 1px at 22% 30%,
+      color-mix(in oklch, var(--color-muted) 60%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      1px 1px at 68% 12%,
+      color-mix(in oklch, var(--color-muted) 50%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      1px 1px at 84% 66%,
+      color-mix(in oklch, var(--color-muted) 55%, transparent),
+      transparent 60%
+    ),
+    color-mix(in oklch, var(--color-surface) 82%, transparent);
+  padding: 1.5rem;
+}
+
+.progressive-route__nodes {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 38rem;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -27,37 +76,139 @@
 .progressive-route__nodes li {
   position: relative;
   display: grid;
+  min-height: 4rem;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.65rem;
-  color: #a8b5c9;
-}
-
-.progressive-route__nodes li > span,
-.progressive-route__nodes li > small {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-}
-
-.progressive-route__nodes li > strong {
-  overflow: hidden;
-  color: #e2e8f0;
-  font-size: 0.78rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  gap: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  padding: 0.85rem 1rem;
+  color: var(--color-ink);
 }
 
 .progressive-route__nodes li:not(:last-child)::after {
   position: absolute;
-  top: calc(100% + 0.1rem);
-  left: 0.6rem;
-  width: 1px;
-  height: 0.6rem;
+  z-index: -1;
+  top: 100%;
+  left: 1.34rem;
+  width: 2px;
+  height: 1.1rem;
   transform-origin: top;
-  animation: progressive-edge-draw 820ms cubic-bezier(0.22, 1, 0.36, 1)
-    both;
-  background: #475569;
+  animation: progressive-edge-draw 820ms
+    cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  background: var(--color-signal);
   content: "";
+}
+
+.progressive-route__status {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--color-signal);
+  border-radius: 50%;
+  background: var(--color-signal);
+  box-shadow: 0 0 0.9rem
+    color-mix(in oklch, var(--color-signal) 32%, transparent);
+}
+
+.progressive-route__node-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+
+.progressive-route__node-copy strong {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progressive-route__node-copy small,
+.progressive-route__format,
+.progressive-route__signals {
+  font-family: var(--font-mono);
+}
+
+.progressive-route__node-copy small {
+  color: var(--color-muted);
+  font-size: 0.6875rem;
+}
+
+.progressive-route__format {
+  border: 1px solid
+    color-mix(in oklch, var(--color-adapt) 45%, var(--color-line));
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--color-adapt) 16%, transparent);
+  padding: 0.25rem 0.55rem;
+  color: color-mix(
+    in oklch,
+    var(--color-adapt) 72%,
+    var(--color-ink)
+  );
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.progressive-route__empty {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.progressive-route__signals {
+  display: flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  color: var(--color-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.progressive-route__signals strong {
+  display: inline-grid;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  place-items: center;
+  border: 1px solid
+    color-mix(in oklch, var(--color-signal) 40%, var(--color-line));
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--color-signal) 14%, transparent);
+  color: var(--color-signal);
+}
+
+.progressive-route__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--color-line);
+  padding-top: 1rem;
+}
+
+.progressive-route__footer p {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.progressive-route__footer span {
+  flex: none;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  white-space: nowrap;
 }
 
 @keyframes progressive-edge-draw {
@@ -66,6 +217,42 @@
   }
   to {
     transform: scaleY(1);
+  }
+}
+
+@media (max-width: 35rem) {
+  .progressive-route {
+    padding: 1rem;
+  }
+
+  .progressive-route__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .progressive-route__canvas {
+    min-height: 16rem;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .progressive-route__nodes li {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .progressive-route__format {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .progressive-route__nodes li:not(:last-child)::after {
+    left: 1.34rem;
+  }
+
+  .progressive-route__footer {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

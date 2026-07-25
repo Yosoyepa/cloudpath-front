@@ -1,4 +1,4 @@
-import { ArrowUpRight, DatabaseZap } from "lucide-react";
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
 
 import type { SourceRef } from "../contracts/generated/contracts";
 
@@ -22,17 +22,15 @@ export function SourceCard({ source }: SourceCardProps) {
   return (
     <article className="source-card">
       <div className="source-card__icon" aria-hidden="true">
-        <DatabaseZap size={18} strokeWidth={1.75} />
+        <ShieldCheck size={18} strokeWidth={1.75} />
       </div>
-      <div className="source-card__body">
-        <p className="source-card__provider">{source.provider}</p>
-        <h3>{source.title}</h3>
-        <div className="source-card__meta">
-          <span>Consultada {readableDate(source.retrievedAt)}</span>
-          <span className={source.cached ? "source-card__cached" : undefined}>
-            {source.cached ? "Copia verificada" : "Fuente en vivo"}
-          </span>
-        </div>
+      <span className="source-card__provider">{source.provider}</span>
+      <div className="source-card__meta">
+        <strong>{source.title}</strong>
+        <span>Consultada {readableDate(source.retrievedAt)}</span>
+        <span className={source.cached ? "source-card__cached" : undefined}>
+          {source.cached ? "Copia verificada" : "Fuente en vivo"}
+        </span>
       </div>
       <a
         className="source-card__link"
@@ -41,6 +39,7 @@ export function SourceCard({ source }: SourceCardProps) {
         rel="noreferrer"
         aria-label={`Abrir ${source.title} en una pestaña nueva`}
       >
+        <span>Abrir documentación</span>
         <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.75} />
       </a>
     </article>

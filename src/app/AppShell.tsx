@@ -1,41 +1,67 @@
-import { Code2 } from "lucide-react";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+
+import { AmbientBackground } from "../components/AmbientBackground";
 
 export function AppShell() {
+  const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const hashTarget = location.hash
+        ? document.getElementById(location.hash.slice(1))
+        : null;
+      if (hashTarget) {
+        hashTarget.scrollIntoView({ block: "start" });
+        return;
+      }
+
+      mainRef.current?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash, location.key]);
+
   return (
     <div className="app-shell">
+      <AmbientBackground />
       <a className="skip-link" href="#main-content">
         Saltar al contenido
       </a>
       <header className="site-header">
-        <Link className="brand" to="/" aria-label="CloudPath, inicio">
-          <img
-            className="brand-mark"
-            src="/brand/cloudpath-mark.svg"
-            alt=""
-            width={32}
-            height={32}
-          />
-          <span>CloudPath</span>
-        </Link>
-        <nav aria-label="Navegación principal">
-          <a
-            className="icon-link"
-            href="https://github.com/Yosoyepa/agentic-dev-hackathon-setup"
-            aria-label="Código abierto de CloudPath"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <Code2 size={18} strokeWidth={1.75} />
-          </a>
-          <Link className="button button-secondary" to="/interview">
-            Construir mi ruta
+        <div className="site-header__inner">
+          <Link className="brand" to="/" aria-label="CloudPath, inicio">
+            <img
+              src="/brand/cloudpath-logo.svg"
+              alt=""
+              width={127}
+              height={34}
+            />
           </Link>
-        </nav>
+          <nav aria-label="Navegación principal">
+            <Link to="/route">Mi ruta</Link>
+            <Link to="/lesson/security-iam-fundamentals#sources">Fuentes</Link>
+            <a
+              href="https://github.com/Yosoyepa/cloudpath-front"
+              rel="noreferrer"
+              target="_blank"
+            >
+              GitHub
+            </a>
+          </nav>
+        </div>
       </header>
-      <main id="main-content">
+      <main id="main-content" ref={mainRef} tabIndex={-1}>
         <Outlet />
       </main>
+      <footer className="page-footer">
+        <div className="cp-container page-footer__inner">
+          <span>© 2026 CloudPath</span>
+          <span>AWS Certified Cloud Practitioner</span>
+        </div>
+      </footer>
     </div>
   );
 }

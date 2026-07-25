@@ -1,4 +1,10 @@
-import { ArrowRight, RotateCcw, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  RotateCcw,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
@@ -32,6 +38,74 @@ const providerLabels: Record<AdaptResponse["source"], string> = {
 };
 
 const pendingAdaptations = new Map<string, Promise<AdaptationResult>>();
+
+function routeNodeState(
+  node: RouteState["nodes"][number],
+  options: {
+    attemptedId: string;
+    insertedId?: string;
+    after: boolean;
+  },
+) {
+  if (node.id === options.insertedId) {
+    return { tone: "adapted", label: "Nueva práctica" };
+  }
+  if (node.id === options.attemptedId) {
+    return options.after
+      ? { tone: "gap", label: "Brecha" }
+      : { tone: "gap", label: "Señal detectada" };
+  }
+  if (node.status === "mastered") {
+    return { tone: "mastered", label: "Dominado" };
+  }
+  if (node.status === "locked") {
+    return { tone: "locked", label: "Bloqueado" };
+  }
+  return { tone: "unknown", label: "Sin evaluar" };
+}
+
+function RouteSnapshot({
+  route,
+  label,
+  attemptedId,
+  insertedId,
+  after,
+}: {
+  route: RouteState;
+  label: string;
+  attemptedId: string;
+  insertedId?: string;
+  after: boolean;
+}) {
+  return (
+    <article
+      className={`recal-route-panel ${after ? "recal-route-panel--after" : ""}`}
+    >
+      <p className="meta">{label}</p>
+      <ol>
+        {route.nodes.map((node) => {
+          const state = routeNodeState(node, {
+            attemptedId,
+            insertedId,
+            after,
+          });
+          return (
+            <li className={`recal-route-node recal-route-node--${state.tone}`} key={node.id}>
+              <span className="recal-route-node__dot" aria-hidden="true" />
+              <span>
+                <strong>{node.title}</strong>
+                <small>
+                  {node.format.replace("_", " ")} · {node.durationMinutes} min
+                </small>
+              </span>
+              <span>{state.label}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </article>
+  );
+}
 
 function adaptationKey(
   profile: LearnerProfile,
@@ -109,6 +183,7 @@ export default function RecalibratedPage() {
     state.lastAdaptation ? "ready" : "loading",
   );
   const [message, setMessage] = useState("");
+  const [showWhy, setShowWhy] = useState(Boolean(state.lastAdaptation));
   const latestAttempt = state.attempts.at(-1) ?? null;
 
   useEffect(() => {
@@ -231,35 +306,59 @@ export default function RecalibratedPage() {
 
   return (
     <section className="recalibrated-page" aria-labelledby="recalibrated-title">
+      <div className="recal-update-toast" role="status">
+        <Sparkles size={19} aria-hidden="true" />
+        <p>
+          <strong>Ruta actualizada</strong>
+          {insertedNode?.type === "insert_node"
+            ? ` · añadimos ${insertedNode.node.title}`
+            : " · ajustamos tu siguiente paso"}
+        </p>
+        {applied ? (
+          <button
+            type="button"
+            className="button button-quiet"
+            aria-expanded={showWhy}
+            aria-controls="why-panel"
+            onClick={() => setShowWhy((current) => !current)}
+          >
+            Ver por qué cambió
+            <ChevronDown size={15} aria-hidden="true" />
+          </button>
+        ) : null}
+      </div>
+
+      {applied ? (
+        <div className="recal-why panel" id="why-panel" hidden={!showWhy}>
+          <p>
+            <strong>Cómo se decidió:</strong> contrastamos tu respuesta, tu
+            confianza y el estado actual de la ruta.
+          </p>
+          <p>
+            El ajuste conserva el historial y puede revertirse sin perder tu
+            progreso.
+          </p>
+        </div>
+      ) : null}
+
       <header className="recalibrated-heading">
-        <span className="eyebrow">
-          <Sparkles size={14} aria-hidden="true" />
+        <p className="eyebrow">
           Señal detectada ·{" "}
           {latestAttempt.confidence === "high"
             ? "confianza alta"
             : "confianza baja"}
-        </span>
-        <h1 id="recalibrated-title">
-          {latestAttempt.correct
-            ? "Confirmaste tu dominio en"
-            : "Detectamos una señal en"}
-          <span> {attemptedTitle}.</span>
-        </h1>
+        </p>
+        <h1 id="recalibrated-title">Qué cambió en tu ruta</h1>
+        <p>
+          {applied
+            ? applied.decision.diagnosis
+            : "Estamos recalculando el siguiente paso a partir de tu respuesta y nivel de confianza."}
+        </p>
         {applied ? (
-          <>
-            <p>
-              <strong>Diagnóstico:</strong> {applied.decision.diagnosis}
-            </p>
-            <p>
-              <strong>Decisión:</strong> {applied.decision.rationale}
-            </p>
-          </>
-        ) : (
-          <p>
-            Estamos recalculando el siguiente paso a partir de tu respuesta y
-            nivel de confianza.
+          <p className="recalibrated-heading__decision">
+            <strong>Decisión:</strong> {applied.decision.rationale}
           </p>
-        )}
+        ) : null}
       </header>
 
       {state.localSignal ? (
@@ -302,34 +401,42 @@ export default function RecalibratedPage() {
       {applied ? (
         <>
           <div className="route-diff" aria-label="Comparación de la ruta">
-            <article className="route-diff-card route-diff-before">
-              <span>Antes</span>
-              <strong>{attemptedTitle}</strong>
-              <small>
-                Dominio {attemptedNode?.mastery ?? 0}%
-              </small>
-            </article>
+            <RouteSnapshot
+              route={applied.routeBefore}
+              label="Ruta anterior"
+              attemptedId={latestAttempt.nodeId}
+              after={false}
+            />
             <ArrowRight className="route-diff-arrow" aria-hidden="true" />
-            <article
-              className={`route-diff-card ${
-                insertedNode ? "route-diff-inserted" : "route-diff-updated"
-              }`}
-            >
-              <span>
-                {insertedNode ? "Intervención insertada" : "Dominio actualizado"}
-              </span>
-              <strong>
-                {insertedNode?.type === "insert_node"
-                  ? insertedNode.node.title
-                  : (adjustedNode?.title ?? attemptedTitle)}
-              </strong>
-              <small>
-                {insertedNode?.type === "insert_node"
-                  ? `${insertedNode.node.durationMinutes} min · ${insertedNode.node.format}`
-                  : `${adjustedNode?.mastery ?? 0}% de dominio`}
-              </small>
-            </article>
+            <RouteSnapshot
+              route={applied.routeAfter}
+              label="Ruta nueva"
+              attemptedId={latestAttempt.nodeId}
+              insertedId={
+                insertedNode?.type === "insert_node"
+                  ? insertedNode.node.id
+                  : undefined
+              }
+              after
+            />
           </div>
+
+          <section className="recal-evidence panel" aria-label="Evidencia actualizada">
+            <p className="meta">Evidencia actualizada</p>
+            <div>
+              <span className="pill pill-green">Ruta v{applied.routeAfter.routeVersion}</span>
+              <span className="pill pill-orange">
+                {attemptedTitle} · señal detectada
+              </span>
+              {insertedNode?.type === "insert_node" ? (
+                <span className="pill pill-violet">Nueva práctica añadida</span>
+              ) : (
+                <span className="pill pill-cyan">
+                  Dominio {adjustedNode?.mastery ?? attemptedNode?.mastery ?? 0}%
+                </span>
+              )}
+            </div>
+          </section>
 
           <div className="recalibrated-actions">
             {insertedNode?.type === "insert_node" ? (
@@ -347,7 +454,7 @@ export default function RecalibratedPage() {
               </Link>
             )}
             <button
-              className="button button-quiet"
+              className="button button-secondary"
               type="button"
               onClick={keepPreviousRoute}
             >

@@ -90,4 +90,21 @@ describe("InterviewPanel", () => {
       screen.queryByRole("button", { name: /continuar por escrito/i }),
     ).not.toBeInTheDocument();
   });
+
+  it("supports keyboard navigation between the mobile tabs", async () => {
+    const user = userEvent.setup();
+    render(<InterviewPanel {...baseProps} />);
+
+    const mentorTab = screen.getByRole("tab", { name: "Mentor" });
+    const routeTab = screen.getByRole("tab", { name: "Mi ruta" });
+    mentorTab.focus();
+    await user.keyboard("{ArrowRight}");
+
+    expect(routeTab).toHaveFocus();
+    expect(routeTab).toHaveAttribute("aria-selected", "true");
+
+    await user.keyboard("{Home}");
+    expect(mentorTab).toHaveFocus();
+    expect(mentorTab).toHaveAttribute("aria-selected", "true");
+  });
 });

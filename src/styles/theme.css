@@ -55,4 +55,45 @@
   background: var(--color-canvas);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+
+  --bg: #070b18;
+  --surface: #0f172a;
+  --elevated: #111c33;
+  --fg: #f8fafc;
+  --muted: #94a3b8;
+  --border: #25324a;
+  --violet: #8b5cf6;
+  --violet-deep: #7952d8;
+  --violet-text: #c4b5fd;
+  --cyan: #22d3ee;
+  --cyan-text: #67e8f9;
+  --orange: #fb923c;
+  --green: #34d399;
+  --focus: #c4b5fd;
+  --panel-matte: rgb(15 23 42 / 0.72);
+  --panel-elevated: rgb(17 28 51 / 0.88);
+  --fg-ghost: rgb(248 250 252 / 0.045);
+  --violet-soft: rgb(139 92 246 / 0.13);
+  --cyan-soft: rgb(34 211 238 / 0.1);
+  --orange-soft: rgb(251 146 60 / 0.1);
+  --green-soft: rgb(52 211 153 / 0.1);
+
+  --font-display: "Space Grotesk Variable", "Space Grotesk", sans-serif;
+  --font-sans: "Inter Variable", Inter, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+
+  --gap-xs: 0.5rem;
+  --gap-sm: 0.75rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.5rem;
+  --gap-xl: 2rem;
+  --gap-2xl: 3rem;
+  --radius-control: 0.75rem;
+  --radius-panel: 1rem;
+  --radius-hero: 1.5rem;
+  --ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --ms-hover: 140ms;
+  --ms-panel: 250ms;
+  --ms-node: 520ms;
+  --ms-edge: 820ms;
 }

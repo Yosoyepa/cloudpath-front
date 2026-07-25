@@ -1,4 +1,3 @@
-import { ArrowRight, Gauge, Lightbulb } from "lucide-react";
 import {
   type FormEvent,
   useRef,
@@ -77,6 +76,7 @@ export function AssessmentForm({
           {question.options.map((option, index) => (
             <label className="assessment-option" key={option}>
               <input
+                className="assessment-native-radio"
                 type="radio"
                 name="answer"
                 value={index}
@@ -112,17 +112,11 @@ export function AssessmentForm({
         }
         aria-invalid={Boolean(errors.confidence)}
       >
-        <legend>
-          <Gauge aria-hidden="true" size={18} strokeWidth={1.75} />
-          ¿Qué tan seguro estás?
-        </legend>
-        <p>
-          No cambia si acertaste. Nos ayuda a distinguir una duda de un modelo
-          mental que debemos recalibrar.
-        </p>
+        <legend>¿Qué tan seguro estás de tu respuesta?</legend>
         <div className="confidence-options">
           <label>
             <input
+              className="assessment-native-radio"
               type="radio"
               name="confidence"
               value="high"
@@ -135,13 +129,11 @@ export function AssessmentForm({
                 }));
               }}
             />
-            <span>
-              <strong>Estoy seguro</strong>
-              <small>Podría explicar por qué.</small>
-            </span>
+            <strong>Estoy seguro</strong>
           </label>
           <label>
             <input
+              className="assessment-native-radio"
               type="radio"
               name="confidence"
               value="low"
@@ -154,10 +146,7 @@ export function AssessmentForm({
                 }));
               }}
             />
-            <span>
-              <strong>No estoy seguro</strong>
-              <small>Elegí con alguna duda.</small>
-            </span>
+            <strong>No estoy seguro</strong>
           </label>
         </div>
         {errors.confidence ? (
@@ -173,12 +162,10 @@ export function AssessmentForm({
 
       <div className="assessment-submit">
         <p>
-          <Lightbulb aria-hidden="true" size={16} />
-          La ruta usa respuesta + confianza para decidir el siguiente paso.
+          Elige una respuesta y tu confianza antes de comprobar.
         </p>
         <button className="button button-primary" type="submit">
           Comprobar respuesta
-          <ArrowRight aria-hidden="true" size={18} />
         </button>
       </div>
     </form>
