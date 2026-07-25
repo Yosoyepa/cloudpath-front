@@ -7,6 +7,7 @@ import "../features/landing/staticLanding.css";
 const headline = "Tu ruta a AWS no debería empezar con otra pestaña.";
 const headlineWords = headline.split(" ");
 const headlineLetterCount = Array.from(headline.replaceAll(" ", "")).length;
+const headlineAccentWordIndex = 6;
 
 function shuffledDelays(): number[] {
   const order = Array.from(
@@ -46,7 +47,17 @@ function AnimatedHeadline() {
     >
       {headlineWords.map((word, wordIndex) => (
         <Fragment key={wordIndex}>
-          <span className="landing-title-word" aria-hidden="true">
+          {wordIndex === headlineAccentWordIndex ? (
+            <br aria-hidden="true" />
+          ) : null}
+          <span
+            className={`landing-title-word${
+              wordIndex >= headlineAccentWordIndex
+                ? " landing-title-word--accent"
+                : ""
+            }`}
+            aria-hidden="true"
+          >
             {Array.from(word).map((letter) => {
               const currentIndex = letterIndex;
               letterIndex += 1;

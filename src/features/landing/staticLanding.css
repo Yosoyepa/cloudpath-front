@@ -39,12 +39,18 @@
   white-space: nowrap;
 }
 
+.landing-title-word--accent {
+  color: var(--violet-text);
+}
+
 .landing-title-letter {
   position: relative;
   display: inline-flex;
   overflow: hidden;
-  margin-block: -0.09em;
-  padding-block: 0.09em;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+  line-height: inherit;
+  vertical-align: bottom;
   white-space: pre;
   user-select: none;
 }
@@ -61,15 +67,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateY(100%);
+  transform: translate3d(0, calc(100% + 0.18em), 0);
 }
 
 .static-landing__headline.is-swapped .landing-title-primary {
-  transform: translateY(-100%);
+  transform: translate3d(0, calc(-100% - 0.18em), 0);
 }
 
 .static-landing__headline.is-swapped .landing-title-secondary {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .static-landing__hero p {

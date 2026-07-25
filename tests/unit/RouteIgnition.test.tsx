@@ -173,6 +173,9 @@ describe("LandingPage", () => {
       name: "Tu ruta a AWS no debería empezar con otra pestaña.",
     });
     expect(heading.querySelectorAll(".landing-title-letter")).toHaveLength(41);
+    expect(
+      heading.querySelectorAll(".landing-title-word--accent"),
+    ).toHaveLength(4);
 
     await user.hover(heading);
     expect(heading).toHaveClass("is-swapped");

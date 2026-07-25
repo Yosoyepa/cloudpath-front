@@ -220,6 +220,29 @@ test("el título de la landing intercambia sus letras al pasar el cursor", async
     name: "Tu ruta a AWS no debería empezar con otra pestaña.",
   });
   const firstLetter = heading.locator(".landing-title-primary").first();
+  const accentLetter = heading
+    .locator(".landing-title-word--accent .landing-title-primary")
+    .first();
+
+  expect(
+    await heading.locator(".landing-title-letter").evaluateAll((letters) =>
+      letters.filter((letter) => {
+        const letterBounds = letter.getBoundingClientRect();
+        const secondaryBounds = (
+          letter.querySelector(".landing-title-secondary") as HTMLElement
+        ).getBoundingClientRect();
+        return (
+          secondaryBounds.top < letterBounds.bottom - 0.5 &&
+          secondaryBounds.bottom > letterBounds.top + 0.5
+        );
+      }).length,
+    ),
+  ).toBe(0);
+  await expect
+    .poll(() =>
+      accentLetter.evaluate((element) => getComputedStyle(element).color),
+    )
+    .toBe("rgb(196, 181, 253)");
 
   await heading.hover();
   await expect(heading).toHaveClass(/is-swapped/);
