@@ -113,6 +113,7 @@ a {
 
 .app-shell--landing .ambient-background video {
   opacity: 0.9;
+  mix-blend-mode: normal;
 }
 
 @keyframes ambient-drift {

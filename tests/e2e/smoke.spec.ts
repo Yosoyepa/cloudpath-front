@@ -218,6 +218,13 @@ test("la landing conserva CTA y ancho útil en desktop y mobile reducido", async
           .evaluate((video) => getComputedStyle(video).opacity),
       )
       .toBe("0.9");
+    await expect
+      .poll(() =>
+        page
+          .locator(".ambient-background video")
+          .evaluate((video) => getComputedStyle(video).mixBlendMode),
+      )
+      .toBe("normal");
     await expect(page.locator(".static-landing__steps")).toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(
